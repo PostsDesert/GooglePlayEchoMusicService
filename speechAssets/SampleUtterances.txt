@@ -19,3 +19,8 @@ EnqueueSongIntent add {query}
 EnqueueSongIntent add {query} to queue
 EnqueueSongIntent add {query} to the queue
 EnqueueSongIntent append {query}
+
+PlayPlaylistIntent play my playlist {customPlaylists}
+PlayPlaylistIntent play {customPlaylists} playlist
+PlayPlaylistIntent playlist {customPlaylists}
+PlayPlaylistIntent play playlist {customPlaylists}
