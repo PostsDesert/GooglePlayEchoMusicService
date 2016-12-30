@@ -19,6 +19,15 @@
       ]
         },
         {
+      "intent": "PlayPlaylistIntent",
+      "slots": [
+        {
+          "name": "customPlaylists",
+          "type": "CUSTOMPLAYLISTS"
+        }
+      ]
+        },
+        {
             "intent": "AMAZON.NextIntent"
         }, 
         {
