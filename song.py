@@ -1,7 +1,7 @@
 # Required Dependencies
 from gmusicapi import Mobileclient
 
-from fuzzywuzzy import fuzz, process
+from fuzzywuzzy import fuzz
 
 import collections
 
@@ -166,6 +166,27 @@ class QueueManager:
             count += 1
         return self.add_playlist_tracks(best_playlist)
 
+    def vote(self, vote):
+        pp.pprint(self._current)
+        if self._current is None:
+            return "Please play a song to vote."
+        elif vote == "thumbs up":
+            try:
+                api.rate_songs(self._current['track'], '5')
+                return "Upvoted"
+            except KeyError:
+                # song = self._current
+                # api.rate_songs(song, '5')
+                api.rate_songs(self._current, '5')
+                return "Error Upvoted"
+        else:
+            try:
+                api.rate_songs(self._current['track'], '1')
+                return "Downvoted"
+            except KeyError:
+                api.rate_songs(self._current, '1')
+                return "Error Downvoted"
+
 
 def song_url(nid):
     try:
@@ -189,4 +210,4 @@ def google_music_login():
 
 
 # api.create_station(name, track_id=None, artist_id=None, album_id=None,
-# genre_id=None, playlist_token=None, curated_station_id=None)
+#                  genre_id=None, playlist_token=None, curated_station_id=None)
