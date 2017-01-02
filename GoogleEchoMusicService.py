@@ -17,7 +17,7 @@ ask = Ask(app, "/googlemusic")
 
 # set to DEBUG for when it breaks or for more info, use INFO for a less
 # cluttered log.
-logging.getLogger("flask_ask").setLevel(logging.DEBUG)
+logging.getLogger("flask_ask").setLevel(logging.INFO)
 
 
 # Login in to google music and use cached key if available
@@ -66,7 +66,6 @@ def enqueue_song(query):
             raise ValueError
         queue.format_for_single_track(query)
         queue.add(query)
-
         return statement("")
 
     except (ValueError, IndexError):
@@ -95,6 +94,26 @@ def play_playlist(customPlaylists):
         return statement(msg) \
             .simple_card(title="Google Music",
                          content=render_template('unable_to_find_song'))
+
+
+@ask.intent("ThumbsUpIntent")
+def thumbs_up():
+    try:
+        msg = queue.vote("thumbs up")
+        return statement(msg)
+
+    except IndexError:
+        return statement("Error. Could not upvote the song")
+
+
+@ask.intent("ThumbsDownIntent")
+def thumbs_down():
+    try:
+        msg = queue.vote("thumbs down")
+        return statement(msg)
+
+    except IndexError:
+        return statement("Error. Could not downvote the song")
 
 
 @ask.on_playback_nearly_finished()
